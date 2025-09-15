@@ -1,3 +1,4 @@
+import 'package:chef_mate/features/recipes/data/service/api.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -113,7 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () async {
+          RecipeApiService service = RecipeApiService();
+          final recipes = await service.getRecipes();
+          print(recipes);
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
