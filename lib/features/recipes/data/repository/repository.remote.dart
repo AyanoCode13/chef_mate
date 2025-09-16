@@ -7,8 +7,6 @@ class RecipeApiRepository implements Repository{
   final RecipeApiService _apiService;
 
   RecipeApiRepository({required RecipeApiService apiService}) : _apiService = apiService;
-
-
   
   @override
   Future<Result<List<RecipeSummary>>> searchRecipesByIngredients({required List<String> ingredients}) async{
