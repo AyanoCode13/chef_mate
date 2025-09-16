@@ -33,7 +33,7 @@ class RecipeApiService {
       throw Exception('Failed to load recipes: $e');
     }
   }
-  Future<RecipeApiModel> searchRecipes({required RecipeQuery query}) async {
+  Future<List<RecipeApiModel>> searchRecipes({required RecipeQuery query}) async {
     
     try{
       final uri = Uri.https(
@@ -50,7 +50,9 @@ class RecipeApiService {
         }
       );
       final data = jsonDecode(res.body);
-      return RecipeApiModel.fromJson(data);
+      final List recipes = data['results'] as List;
+      return recipes.map((elem) => RecipeApiModel.fromJson(elem)).toList();
+      
     } on Exception catch (e){
       throw Exception('Failed to load recipes: $e');
     }
