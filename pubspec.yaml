@@ -39,10 +39,16 @@ dependencies:
   provider: ^6.1.5+1
   flutter_dotenv: ^6.0.0
   logger: ^2.6.1
+  freezed: ^3.2.3
+  freezed_annotation: ^3.1.0
+  json_annotation: 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  build_runner: ^2.8.0
+  json_serializable: ^6.11.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -66,6 +72,7 @@ flutter:
   assets:
     - assets/recipes/
     - assets/ingredients/
+    - .env
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
