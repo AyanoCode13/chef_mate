@@ -1,7 +1,10 @@
-import 'package:chef_mate/features/recipes/data/service/api.dart';
+import 'package:chef_mate/features/recipes/data/service/api.service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -116,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           RecipeApiService service = RecipeApiService();
-          final recipes = await service.getRecipes();
+          final recipes = await service.findRecipesByIngredients(ingredients: ['chicken,carrots'], limit: 5, ignorePantry: true, ranking: 2);
           print(recipes);
         },
         tooltip: 'Increment',
