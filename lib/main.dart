@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           RecipeApiService service = RecipeApiService();
-          final recipes = await service.searchRecipes(query: RecipeQuery(cuisine: "italian"));
+          final recipes = await service.googleSearchRecipes();
           print(recipes);
         },
         tooltip: 'Increment',
