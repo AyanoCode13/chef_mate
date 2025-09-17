@@ -30,8 +30,8 @@ class RecipeQuery {
   // Sorting and pagination
   final String? sort;
   final String? sortDirection;
-  final int? offset;
-  final int? number;
+  late int? offset = 0;
+  late int? number = 10;
 
   // Nutritional constraints - Macronutrients
   final int? minCalories;
