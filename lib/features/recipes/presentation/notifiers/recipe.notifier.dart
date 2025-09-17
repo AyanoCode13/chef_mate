@@ -18,11 +18,13 @@ class  RecipeNotifier extends ChangeNotifier {
     searchByIngredientsCommand = ComplexCommand(_searchByIngredients);
     load = ComplexCommand(_searchRecipes)..execute(arg: RecipeQuery());
     searchRecipes = ComplexCommand(_searchRecipes);
+    simulateSearch = BasicCommand(_simutaleSearch);
   }
 
   late final ComplexCommand<void,List<String>> searchByIngredientsCommand;
   late final ComplexCommand<void, RecipeQuery> load;
   late final ComplexCommand<void, RecipeQuery> searchRecipes;
+  late final BasicCommand simulateSearch;
   late List<RecipeSummary> _recipes;
   List<RecipeSummary> get recipes => _recipes;
 
@@ -59,8 +61,13 @@ class  RecipeNotifier extends ChangeNotifier {
     }
     finally{
       notifyListeners();
-    }
-    
+    } 
+  }
+
+  Future<Result<void>> _simutaleSearch() async {
+    await Future.delayed(Duration(seconds: 5));
+    print("Searching");
+    return Result.ok(null);
   }
 
 }

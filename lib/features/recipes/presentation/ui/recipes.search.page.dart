@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chef_mate/features/recipes/data/query/search.recipe.query.dart';
 import 'package:chef_mate/features/recipes/presentation/notifiers/recipe.notifier.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ class RecipesSearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = context.watch<RecipeNotifier>().load;
+    
     // TODO: implement build
     return Material(
       child: ListenableBuilder(
@@ -25,24 +28,35 @@ class RecipesSearchPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             actions: [
-              Flexible(child: _SearchButton())
+              Flexible(child: _SearchBar())
               
             ],
           ),
-          body: ListenableBuilder(
-            listenable: context.watch<RecipeNotifier>(),
-            builder: (context, _) {
-              final recipes = context.watch<RecipeNotifier>().recipes;
-              return GridView.builder(
-                itemCount: recipes.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemBuilder: (context, index) {
-                  return Card(child: Text(recipes.elementAt(index).title));
-                },
-              );
-            },
+          body: SafeArea(
+            child: ListenableBuilder(
+              listenable: Listenable.merge([
+                context.watch<RecipeNotifier>(),
+                context.watch<RecipeNotifier>().simulateSearch
+              ]),
+              builder: (context, _) {
+                final search = context.watch<RecipeNotifier>().simulateSearch;
+                if(search.running){
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final recipes = context.watch<RecipeNotifier>().recipes;
+                return GridView.builder(
+                  itemCount: recipes.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemBuilder: (context, index) {
+                    return Card(child: Text(recipes.elementAt(index).title));
+                  },
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -50,26 +64,56 @@ class RecipesSearchPage extends StatelessWidget {
   }
 }
 
-class _SearchButton extends StatelessWidget {
+
+class _SearchBar extends StatefulWidget {
+  const _SearchBar({
+    super.key 
+  });
+
+  @override
+  State<_SearchBar> createState() => __SearchBarState();
+}
+
+class __SearchBarState extends State<_SearchBar> {
+  final TextEditingController _controller = TextEditingController();
+  Timer? _debounceTimer;
+  final Duration delay = Duration(milliseconds: 500);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_onSearchChanged);
+  }
+
+  void _onSearchChanged() {
+    
+    // Cancel the previous timer
+    _debounceTimer?.cancel();
+    
+    // Start a new timer
+    _debounceTimer = Timer(delay, () {
+      // Execute search when timer completes
+      if (_controller.text.isNotEmpty) {
+       context.read<RecipeNotifier>().simulateSearch.execute();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    final searchRecipes = context.read<RecipeNotifier>().searchRecipes;
-    final recipes = context.watch<RecipeNotifier>().recipes;
-    return SearchAnchor.bar(
-      
-      onChanged: (value) async{
-        await searchRecipes.execute(arg: RecipeQuery(titleMatch: value));
-        print(recipes);
-      },
-      suggestionsBuilder: (context, controller) async {
-        await searchRecipes.execute(arg: RecipeQuery(titleMatch: controller.text));
-        print(recipes); 
-     
-      return recipes.map((recipe)=> ListTile(
-        title: Text(recipe.title),
-        
-      ));
-    });
+    return TextField(
+      controller: _controller,
+      decoration: const InputDecoration(
+        hintText: 'Search...',
+        prefixIcon: Icon(Icons.search),
+      ),
+    );
   }
 }
