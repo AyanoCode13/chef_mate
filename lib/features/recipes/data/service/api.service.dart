@@ -34,8 +34,11 @@ class RecipeApiService {
           'Content-Type': 'application/json',
         },
       );
-      final data = jsonDecode(res.body) as List;
-      return data.map((elem) => RecipeApiModel.fromJson(elem)).toList();
+      if(res.statusCode == 200){
+        final data = jsonDecode(res.body) as List;
+        return data.map((elem) => RecipeApiModel.fromJson(elem)).toList();
+      }
+      return [];
     } on Exception catch (e) {
       throw Exception('Failed to load recipes: $e');
     }

@@ -48,28 +48,16 @@ class _RecipeListState extends State<RecipeList> {
     // TODO: implement build
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          Expanded(
-            child: GridView.builder(
-              controller: _scrollController,
-              itemCount: recipes.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-              ),
-              itemBuilder: (context, index) {
-                final recipe = recipes.elementAt(index);
-                return RecipeCard(recipe: recipe);
-              },
-            ),
-          ),
-          Flexible(child: TextButton(onPressed: () async {
-            setState(() {
-              _offset+=10;
-            });
-            await loadMore.execute(arg: RecipeQuery(offset: _offset));
-          }, child: Text("Load More")))
-        ],
+      child: GridView.builder(
+        controller: _scrollController,
+        itemCount: recipes.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+        ),
+        itemBuilder: (context, index) {
+          final recipe = recipes.elementAt(index);
+          return RecipeCard(recipe: recipe);
+        },
       ),
     );
   }

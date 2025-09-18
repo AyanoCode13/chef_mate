@@ -23,9 +23,9 @@ class RecipesSearchPage extends StatelessWidget {
           body: SafeArea(
             child: Column(
               children: [
-                Flexible(child: Text("Filters")),
-                Flexible(
-                  flex: 3,
+                Text("Filters"),
+                Expanded(
+                  
                   child: ListenableBuilder(
                     listenable: context.watch<RecipeNotifier>(),
                     builder: (context, _) {
@@ -39,6 +39,7 @@ class RecipesSearchPage extends StatelessWidget {
                     },
                   ),
                 ),
+                TextButton(onPressed: (){}, child: Text("Load more"))
               ],
             ),
           ),
