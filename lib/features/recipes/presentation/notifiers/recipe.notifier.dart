@@ -25,7 +25,7 @@ class  RecipeNotifier extends ChangeNotifier {
   late final ComplexCommand<void, RecipeQuery> load;
   late final ComplexCommand<void, RecipeQuery> searchRecipes;
   late final BasicCommand simulateSearch;
-  late List<RecipeSummary> _recipes;
+  late List<RecipeSummary> _recipes = [];
   List<RecipeSummary> get recipes => _recipes;
 
   Future<Result<void>> _searchRecipes(RecipeQuery query) async {

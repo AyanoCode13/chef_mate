@@ -11,6 +11,7 @@ class RecipeApiService {
     @param limit Number of recipes to return
 
   */
+  
   Future<List<RecipeApiModel>> findRecipesByIngredients({
     required List<String> ingredients,
     int limit = 10,
@@ -19,7 +20,7 @@ class RecipeApiService {
   }) async {
     try {
       final uri =
-          Uri.https(dotenv.env['BASE_URL']!, '/recipes/findByIngredients', {
+          Uri.https(dotenv.env['RECIPE_API_BASE_URL']!, '/recipes/findByIngredients', {
             'ingredients': ingredients.join(','),
             'number': limit.toString(),
             'limitLicense': 'true',
@@ -29,7 +30,7 @@ class RecipeApiService {
       final res = await http.get(
         uri,
         headers: {
-          'X-API-KEY': dotenv.env['API_KEY']!,
+          'X-API-KEY': dotenv.env['RECIPE_API_KEY']!,
           'Content-Type': 'application/json',
         },
       );
@@ -45,7 +46,7 @@ class RecipeApiService {
   }) async {
     try {
       final uri = Uri.https(
-        dotenv.env['BASE_URL']!,
+        dotenv.env['RECIPE_API_BASE_URL']!,
         'recipes/complexSearch',
         query.toQueryParameters(),
       );
@@ -53,20 +54,42 @@ class RecipeApiService {
       final res = await http.get(
         uri,
         headers: {
-          'X-API-KEY': dotenv.env['API_KEY']!,
+          'X-API-KEY': dotenv.env['RECIPE_API_KEY']!,
           'Content-Type': 'application/json',
         },
       );
+      print(res.statusCode);
       if (res.statusCode == 200) {
         final data = jsonDecode(res.body);
         final List recipes = data['results'] as List;
         return recipes.map((elem) => RecipeApiModel.fromJson(elem)).toList();
       }
-      print(res.statusCode);
       return [];
     } on Exception catch (e) {
       throw Exception('Failed to load recipes: $e');
     }
+  }
+
+  Future<String> getRecipesAutocomplete({ required String query }) async {
+    final uri = Uri.https(
+      dotenv.env["BASE_URL"]!,
+      'recipes/autocomplete',
+      {
+        'query':query
+      }
+    );
+
+    final res = await http.get(
+      uri,
+      headers: {
+        'X-API-KEY': dotenv.env['API_KEY']!,
+        'Content-Type': 'application/json',
+      },
+    );
+    if(res.statusCode == 200){
+      print(res.body);
+    }
+    return "";
   }
 
   Future<List<Map<String, dynamic>>> googleSearchRecipes() async {

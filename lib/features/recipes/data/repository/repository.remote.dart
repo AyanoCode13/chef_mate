@@ -14,6 +14,7 @@ class RecipeApiRepository implements RecipeRepository{
     // TODO: implement searchRecipesByIngredients
     try{
       final res = await _apiService.findRecipesByIngredients(ingredients: []);
+      print(res);
       
       return Result.ok(
         res.map((recipeApiModel)=> 
@@ -28,19 +29,21 @@ class RecipeApiRepository implements RecipeRepository{
     }
   }
   
-
-  
   @override
   Future<Result<List<RecipeSummary>>> searchRecipesByNutrients() {
     // TODO: implement searchRecipesByNutrients
     throw UnimplementedError();
   }
 
+ 
+
   @override
   Future<Result<List<RecipeSummary>>> searchRecipes({required RecipeQuery query}) async {
     // TODO: implement searchRecipes
     try{
+      
       final res = await _apiService.searchRecipes(query: query);
+      print(res);
        return Result.ok(
         res.map((recipeApiModel)=> 
         RecipeSummary(
