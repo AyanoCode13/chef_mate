@@ -30,9 +30,7 @@ class _RecipesSearchBarState extends State<RecipesSearchBar> {
     // Start a new timer
     _debounceTimer = Timer(delay, () {
       // Execute search when timer completes
-      if (_controller.text.isNotEmpty) {
-        context.read<RecipeNotifier>().searchRecipes.execute(arg: RecipeQuery(titleMatch: _controller.text));
-      }
+      context.read<RecipeNotifier>().searchRecipes.execute(arg: RecipeQuery(titleMatch: _controller.text));
     });
   }
 
@@ -45,12 +43,9 @@ class _RecipesSearchBarState extends State<RecipesSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return SearchBar(
+      leading: Icon(Icons.search),
       controller: _controller,
-      decoration: const InputDecoration(
-        hintText: 'Search...',
-        prefixIcon: Icon(Icons.search),
-      ),
     );
   }
 }
