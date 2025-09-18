@@ -1,27 +1,75 @@
+import 'package:chef_mate/features/recipes/data/query/search.recipe.query.dart';
 import 'package:chef_mate/features/recipes/presentation/notifiers/recipe.notifier.dart';
+import 'package:chef_mate/features/recipes/presentation/ui/recipesSearchPage/recipe.card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RecipeList extends StatelessWidget {
+class RecipeList extends StatefulWidget {
   const RecipeList({super.key});
+
+  @override
+  State<RecipeList> createState() => _RecipeListState();
+}
+
+class _RecipeListState extends State<RecipeList> {
+  final ScrollController _scrollController = ScrollController();
+  int _offset = 10;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   
+  }
+  
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+    
+  }
+  void _scrollListener() {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 300) {
+      setState(() {
+        _offset +=10;  
+      }); // Trigger 200px before bottom
+      context.read<RecipeNotifier>().searchRecipes.execute(arg: RecipeQuery(offset: _offset));
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final recipes = context.watch<RecipeNotifier>().recipes;
+    final loadMore = context.read<RecipeNotifier>().searchRecipes;
+   
     // TODO: implement build
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: GridView.builder(
-        itemCount: recipes.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemBuilder: (context, index) {
-          return Card(child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Text(recipes.elementAt(index).title),
-          ));
-        },
+      child: Column(
+        children: [
+          Expanded(
+            child: GridView.builder(
+              controller: _scrollController,
+              itemCount: recipes.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemBuilder: (context, index) {
+                final recipe = recipes.elementAt(index);
+                return RecipeCard(recipe: recipe);
+              },
+            ),
+          ),
+          Flexible(child: TextButton(onPressed: () async {
+            setState(() {
+              _offset+=10;
+            });
+            await loadMore.execute(arg: RecipeQuery(offset: _offset));
+          }, child: Text("Load More")))
+        ],
       ),
     );
   }

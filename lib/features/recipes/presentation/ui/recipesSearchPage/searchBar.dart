@@ -44,7 +44,12 @@ class _RecipesSearchBarState extends State<RecipesSearchBar> {
   @override
   Widget build(BuildContext context) {
     return SearchBar(
-      leading: Icon(Icons.search),
+      leading: Row(
+        children: [
+          Icon(Icons.search),
+          Text("Search...")
+        ],
+      ),
       controller: _controller,
     );
   }

@@ -16,28 +16,33 @@ class RecipesSearchPage extends StatelessWidget {
     return Material(
       child: StatusDisplay(
         command: status,
+        loadingWidget: Center(child: CircularProgressIndicator()),
+        errorWidget: Text("Error"),
         successWidget: Scaffold(
           appBar: AppBar(actions: [Flexible(child: RecipesSearchBar())]),
           body: SafeArea(
-            child: ListenableBuilder(
-              listenable: Listenable.merge([
-                context.watch<RecipeNotifier>(),
-                context.watch<RecipeNotifier>().searchRecipes,
-              ]),
-              builder: (context, _) {
-                final search = context.watch<RecipeNotifier>().searchRecipes;
-                return StatusDisplay(
-                  command: search,
-                  loadingWidget: Center(child: CircularProgressIndicator()),
-                  errorWidget: Text("Error"),
-                  successWidget: RecipeList(),
-                );
-              },
+            child: Column(
+              children: [
+                Flexible(child: Text("Filters")),
+                Flexible(
+                  flex: 3,
+                  child: ListenableBuilder(
+                    listenable: context.watch<RecipeNotifier>(),
+                    builder: (context, _) {
+                      final search = context.watch<RecipeNotifier>().searchRecipes;
+                      return StatusDisplay(
+                        command: search,
+                        loadingWidget: Center(child: CircularProgressIndicator()),
+                        errorWidget: Text("Error"),
+                        successWidget: RecipeList(),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-        loadingWidget: Center(child: CircularProgressIndicator()),
-        errorWidget: Text("Error"),
       ),
     );
   }
