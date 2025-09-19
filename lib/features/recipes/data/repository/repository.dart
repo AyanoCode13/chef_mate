@@ -6,4 +6,5 @@ abstract class RecipeRepository {
   Future<Result<List<RecipeSummary>>> searchRecipes({required RecipeQuery query});
   Future<Result<List<RecipeSummary>>> searchRecipesByIngredients({required List<String> ingredients});
   Future<Result<List<RecipeSummary>>> searchRecipesByNutrients();
+  Future<Result<List<String>>> getRecipesAutocomplete({ required String query});
 }

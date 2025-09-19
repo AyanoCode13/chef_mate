@@ -1,6 +1,7 @@
 import 'package:chef_mate/features/recipes/data/repository/repository.dart';
 import 'package:chef_mate/features/recipes/data/repository/repository.remote.dart';
 import 'package:chef_mate/features/recipes/data/service/api.service.dart';
+import 'package:chef_mate/features/recipes/domain/useCase/recipes.getAutocomplete.useCase.dart';
 import 'package:chef_mate/features/recipes/domain/useCase/recipes.search.useCase.dart';
 import 'package:chef_mate/features/recipes/domain/useCase/recipes.searchByIngredients.useCase.dart';
 import 'package:chef_mate/features/recipes/presentation/notifiers/recipe.notifier.dart';
@@ -25,9 +26,11 @@ List<SingleChildWidget> get recipeProviders => [
       recipeRepository: context.read<RecipeApiRepository>() as RecipeRepository
     )
   ),
+  Provider(create: (context) => GetRecipesAutocompleteUseCase(recipeRepository: context.read<RecipeApiRepository>() as RecipeRepository)),
   ChangeNotifierProvider(
     create: (context) => 
     RecipeNotifier(
+      getRecipesAutocompleteUseCase:context.read<GetRecipesAutocompleteUseCase>(),
       searchRecipesByIngredientsUseCase: context.read<SearchRecipesByIngredientsUseCase>(),
       searchRecipesUseCase: context.read<SearchRecipesUseCase>()
     )

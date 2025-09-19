@@ -30,12 +30,12 @@ class _RecipeListState extends State<RecipeList> {
     super.dispose();
     
   }
-  void _scrollListener() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 300) {
+  Future<void> _scrollListener() async {
+    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
       setState(() {
         _offset +=10;  
       }); // Trigger 200px before bottom
-      context.read<RecipeNotifier>().searchRecipes.execute(arg: RecipeQuery(offset: _offset));
+      await context.read<RecipeNotifier>().searchRecipes.execute(arg: RecipeQuery(offset: _offset));
     }
   }
 
@@ -43,8 +43,7 @@ class _RecipeListState extends State<RecipeList> {
   @override
   Widget build(BuildContext context) {
     final recipes = context.watch<RecipeNotifier>().recipes;
-    final loadMore = context.read<RecipeNotifier>().searchRecipes;
-   
+    
     // TODO: implement build
     return Padding(
       padding: const EdgeInsets.all(10.0),

@@ -3,60 +3,77 @@ import 'package:chef_mate/features/recipes/data/repository/repository.dart';
 import 'package:chef_mate/features/recipes/data/service/api.service.dart';
 import 'package:chef_mate/features/recipes/domain/entity/recipe_summary/recipe.summary.dart';
 import 'package:chef_mate/utils/result.dart';
+import 'package:flutter/foundation.dart';
 
-class RecipeApiRepository implements RecipeRepository{
+class RecipeApiRepository implements RecipeRepository {
   final RecipeApiService _apiService;
 
-  RecipeApiRepository({required RecipeApiService apiService}) : _apiService = apiService;
-  
+  RecipeApiRepository({required RecipeApiService apiService})
+    : _apiService = apiService;
+
   @override
-  Future<Result<List<RecipeSummary>>> searchRecipesByIngredients({required List<String> ingredients}) async{
+  Future<Result<List<RecipeSummary>>> searchRecipesByIngredients({
+    required List<String> ingredients,
+  }) async {
     // TODO: implement searchRecipesByIngredients
-    try{
+    try {
       final res = await _apiService.findRecipesByIngredients(ingredients: []);
       print(res);
-      
+
       return Result.ok(
-        res.map((recipeApiModel)=> 
-        RecipeSummary(
-          id: recipeApiModel.id.toString(), 
-          title: recipeApiModel.title, 
-          imageUrl: recipeApiModel.image
-        )).toList()
+        res
+            .map(
+              (recipeApiModel) => RecipeSummary(
+                id: recipeApiModel.id.toString(),
+                title: recipeApiModel.title,
+                imageUrl: recipeApiModel.image,
+              ),
+            )
+            .toList(),
       );
-    } on Exception catch (e){
+    } on Exception catch (e) {
       return Result.error(e);
     }
   }
-  
+
   @override
   Future<Result<List<RecipeSummary>>> searchRecipesByNutrients() {
     // TODO: implement searchRecipesByNutrients
     throw UnimplementedError();
   }
 
- 
-
   @override
-  Future<Result<List<RecipeSummary>>> searchRecipes({required RecipeQuery query}) async {
+  Future<Result<List<RecipeSummary>>> searchRecipes({
+    required RecipeQuery query,
+  }) async {
     // TODO: implement searchRecipes
-    try{
-      
+    try {
       final res = await _apiService.searchRecipes(query: query);
       print(res);
-       return Result.ok(
-        res.map((recipeApiModel)=> 
-        RecipeSummary(
-          id: recipeApiModel.id.toString(), 
-          title: recipeApiModel.title, 
-          imageUrl: recipeApiModel.image
-        )).toList()
+      return Result.ok(
+        res
+            .map(
+              (recipeApiModel) => RecipeSummary(
+                id: recipeApiModel.id.toString(),
+                title: recipeApiModel.title,
+                imageUrl: recipeApiModel.image,
+              ),
+            )
+            .toList(),
       );
-    } on Exception catch (e){
+    } on Exception catch (e) {
       return Result.error(e);
     }
+  }
 
-    
-
+  Future<Result<List<String>>> getRecipesAutocomplete({
+    required String query,
+  }) async {
+    try {
+      final res = await _apiService.getRecipesAutocomplete(query: query);
+      return Result.ok(res);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
   }
 }

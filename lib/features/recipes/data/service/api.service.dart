@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 
 import 'package:chef_mate/features/recipes/data/models/api/recipe.api.model.dart';
 import 'package:chef_mate/features/recipes/data/query/search.recipe.query.dart';
@@ -73,9 +74,9 @@ class RecipeApiService {
     }
   }
 
-  Future<String> getRecipesAutocomplete({ required String query }) async {
+  Future<List<String>> getRecipesAutocomplete({ required String query }) async {
     final uri = Uri.https(
-      dotenv.env["BASE_URL"]!,
+      dotenv.env["RECIPE_API_BASE_URL"]!,
       'recipes/autocomplete',
       {
         'query':query
@@ -85,15 +86,19 @@ class RecipeApiService {
     final res = await http.get(
       uri,
       headers: {
-        'X-API-KEY': dotenv.env['API_KEY']!,
+        'X-API-KEY': dotenv.env['RECIPE_API_KEY']!,
         'Content-Type': 'application/json',
       },
     );
     if(res.statusCode == 200){
       print(res.body);
+      final List data = await _decodeJSON(data: res.body);
+      return data.map((result)=> result["title"] as String).toList();
+
     }
-    return "";
+    return [];
   }
+  
 
   Future<List<Map<String, dynamic>>> googleSearchRecipes() async {
     try {
@@ -117,5 +122,11 @@ class RecipeApiService {
     } on Exception catch (e) {
       throw Exception('Failed to load recipes: $e');
     }
+  }
+
+  Future<dynamic> _decodeJSON({ required String data}) async {
+    return await Isolate.run((){
+      return json.decode(data);
+    });  
   }
 }

@@ -1,6 +1,8 @@
+import 'package:chef_mate/features/recipes/data/query/search.recipe.query.dart';
 import 'package:chef_mate/features/recipes/presentation/notifiers/recipe.notifier.dart';
+import 'package:chef_mate/features/recipes/presentation/ui/recipesSearchPage/recipe.buttom.loadMore.dart';
 import 'package:chef_mate/features/recipes/presentation/ui/recipesSearchPage/recipe.list.dart';
-import 'package:chef_mate/features/recipes/presentation/ui/recipesSearchPage/searchBar.dart';
+import 'package:chef_mate/features/recipes/presentation/ui/recipesSearchPage/recipe.searchBar.dart';
 import 'package:chef_mate/features/recipes/presentation/ui/status.display.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +41,7 @@ class RecipesSearchPage extends StatelessWidget {
                     },
                   ),
                 ),
-                TextButton(onPressed: (){}, child: Text("Load more"))
+                LoadMoreButton()
               ],
             ),
           ),
