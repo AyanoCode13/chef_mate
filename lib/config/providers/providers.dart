@@ -1,10 +1,10 @@
-import 'package:chef_mate/features/recipes/data/repository/repository.dart';
-import 'package:chef_mate/features/recipes/data/repository/repository.remote.dart';
-import 'package:chef_mate/features/recipes/data/service/api.service.dart';
-import 'package:chef_mate/features/recipes/domain/useCase/recipes.getAutocomplete.useCase.dart';
-import 'package:chef_mate/features/recipes/domain/useCase/recipes.search.useCase.dart';
-import 'package:chef_mate/features/recipes/domain/useCase/recipes.searchByIngredients.useCase.dart';
-import 'package:chef_mate/features/recipes/presentation/notifiers/recipe.notifier.dart';
+import 'package:chef_mate/features/recipe/data/repository/repository.dart';
+import 'package:chef_mate/features/recipe/data/repository/repository.remote.dart';
+import 'package:chef_mate/features/recipe/data/service/api.service.dart';
+import 'package:chef_mate/features/recipe/domain/useCase/recipes.getAutocomplete.useCase.dart';
+import 'package:chef_mate/features/recipe/domain/useCase/recipes.search.useCase.dart';
+import 'package:chef_mate/features/recipe/domain/useCase/recipes.searchByIngredients.useCase.dart';
+import 'package:chef_mate/features/recipe/presentation/notifiers/recipe.notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
