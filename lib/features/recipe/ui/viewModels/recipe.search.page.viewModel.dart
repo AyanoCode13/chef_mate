@@ -5,14 +5,14 @@ import 'package:chef_mate/features/recipe/domain/useCase/recipes.search.useCase.
 import 'package:chef_mate/features/recipe/domain/useCase/recipes.searchByIngredients.useCase.dart';
 import 'package:chef_mate/utils/command.dart';
 import 'package:chef_mate/utils/result.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:logger/logger.dart';
 
-class RecipeNotifier extends ChangeNotifier {
+class RecipeSearchPageViewModel extends ChangeNotifier {
   final SearchRecipesByIngredientsUseCase _searchRecipesByIngredientsUseCase;
   final SearchRecipesUseCase _searchRecipesUseCase;
   final GetRecipesAutocompleteUseCase _getRecipesAutocompleteUseCase;
-  RecipeNotifier({
+  RecipeSearchPageViewModel({
     required GetRecipesAutocompleteUseCase getRecipesAutocompleteUseCase,
     required SearchRecipesByIngredientsUseCase
     searchRecipesByIngredientsUseCase,
@@ -22,6 +22,7 @@ class RecipeNotifier extends ChangeNotifier {
        _searchRecipesUseCase = searchRecipesUseCase {
     searchByIngredientsCommand = ComplexCommand(_searchByIngredients);
     load = ComplexCommand(_searchRecipes)..execute(arg: RecipeQuery());
+    loadMore = ComplexCommand(_loadMore);
     searchRecipes = ComplexCommand(_searchRecipes);
     getAutocomplete = ComplexCommand(_getAutoComplete);
     simulateSearch = BasicCommand(_simutaleSearch);
@@ -29,10 +30,12 @@ class RecipeNotifier extends ChangeNotifier {
 
   late final ComplexCommand<void, List<String>> searchByIngredientsCommand;
   late final ComplexCommand<void, RecipeQuery> load;
+  late final ComplexCommand<void, int> loadMore;
   late final ComplexCommand<void, RecipeQuery> searchRecipes;
   late final ComplexCommand<void, String> getAutocomplete;
   late final BasicCommand simulateSearch;
-  RecipeQuery _query = RecipeQuery();
+
+  late RecipeQuery _query;
 
   final Logger _logger = Logger();
 
@@ -43,9 +46,9 @@ class RecipeNotifier extends ChangeNotifier {
   List<String> get suggestions => _suggestions;
 
   Future<Result<void>> _searchRecipes(RecipeQuery query) async {
-    _logger.i(query.toQueryParameters());
-    _updateQuery(query);
-    
+    _query = query;
+    _logger.i(_query.toQueryParameters());
+
     try {
       final res = await _searchRecipesUseCase.call(query: _query);
       switch (res) {
@@ -105,10 +108,10 @@ class RecipeNotifier extends ChangeNotifier {
     }
   }
 
-  void _updateQuery(RecipeQuery query) {
-    _query = _query.merge(query);
+  Future<Result<void>> _loadMore(int offset) async {
+    _query = _query.merge(RecipeQuery(offset: offset));
     _logger.i(_query.toQueryParameters());
-    notifyListeners();
+    return await _searchRecipes(_query);
   }
 
   Future<Result<void>> _simutaleSearch() async {

@@ -1,11 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chef_mate/features/recipe/data/query/search.recipe.query.dart';
-import 'package:chef_mate/features/recipe/presentation/notifiers/recipe.notifier.dart';
-import 'package:chef_mate/features/recipe/presentation/ui/searchPage/recipe.card.dart';
+import 'package:chef_mate/features/recipe/ui/viewModels/recipe.search.page.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RecipeList extends StatefulWidget {
-  const RecipeList({super.key});
+  final RecipeSearchPageViewModel _viewModel;
+
+  const RecipeList({super.key, required RecipeSearchPageViewModel viewModel}) : _viewModel = viewModel;
 
   @override
   State<RecipeList> createState() => _RecipeListState();
@@ -19,7 +21,7 @@ class _RecipeListState extends State<RecipeList> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   
+    _scrollController.addListener(_scrollListener);
   }
   
   @override
@@ -35,29 +37,32 @@ class _RecipeListState extends State<RecipeList> {
       setState(() {
         _offset +=10;  
       }); // Trigger 200px before bottom
-      await context.read<RecipeNotifier>().searchRecipes.execute(arg: RecipeQuery(offset: _offset));
+      await widget._viewModel.loadMore.execute(arg: _offset);
     }
   }
 
 
   @override
   Widget build(BuildContext context) {
-    final recipes = context.watch<RecipeNotifier>().recipes;
+    
     
     // TODO: implement build
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: GridView.builder(
-        controller: _scrollController,
-        itemCount: recipes.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemBuilder: (context, index) {
-          final recipe = recipes.elementAt(index);
-          return RecipeCard(recipe: recipe);
-        },
-      ),
+    return ListView.builder(
+      controller: _scrollController,
+      itemCount: widget._viewModel.recipes.length,
+      itemBuilder: (context, index){
+        final crtItem = widget._viewModel.recipes.elementAt(index);
+        return ListTile(
+          title: Text(crtItem.title),
+          leading: Image(
+            image: CachedNetworkImageProvider(crtItem.imageUrl),
+            width: 40,
+            height: 40,
+            fit: BoxFit.cover,
+          ),
+         
+        );
+      }
     );
   }
 }

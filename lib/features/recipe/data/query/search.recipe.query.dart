@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class RecipeQuery {
   // Basic search parameters
   final String? query;
@@ -469,6 +467,9 @@ class RecipeQuery {
       minZinc: other.minZinc ?? minZinc,
       maxZinc: other.maxZinc ?? maxZinc,
     );
+  }
+  RecipeQuery reset() {
+    return RecipeQuery();
   }
   // Method to convert to query string
   String toQueryString() {

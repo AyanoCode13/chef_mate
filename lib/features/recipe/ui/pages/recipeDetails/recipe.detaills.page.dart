@@ -1,4 +1,4 @@
-import 'package:chef_mate/features/recipe/presentation/ui/recipeDetails/recipe.video.dart';
+import 'package:chef_mate/features/recipe/ui/pages/recipeDetails/recipe.video.dart';
 import 'package:flutter/material.dart';
 
 class RecipeDetailsPage extends StatelessWidget {

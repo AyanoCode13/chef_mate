@@ -1,11 +1,14 @@
 import 'dart:async';
+
 import 'package:chef_mate/features/recipe/data/query/search.recipe.query.dart';
-import 'package:chef_mate/features/recipe/presentation/notifiers/recipe.notifier.dart';
+import 'package:chef_mate/features/recipe/ui/viewModels/recipe.search.page.viewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RecipesSearchBar extends StatefulWidget {
-  const RecipesSearchBar({super.key});
+  final RecipeSearchPageViewModel _viewModel;
+
+  const RecipesSearchBar({super.key, required RecipeSearchPageViewModel viewModel}) : _viewModel = viewModel;
+ 
 
   @override
   State<RecipesSearchBar> createState() => _RecipesSearchBarState();
@@ -49,9 +52,10 @@ class _RecipesSearchBarState extends State<RecipesSearchBar> {
     
     return SearchBar(
       onSubmitted: (value) async {
-         await context.read<RecipeNotifier>().searchRecipes.execute(
+         await widget._viewModel.searchRecipes.execute(
           arg: RecipeQuery(titleMatch: value),
         );
+        _controller.clear();
       },
       controller: _controller,
       leading: Icon(Icons.search),
