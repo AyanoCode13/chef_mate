@@ -21,7 +21,7 @@ class RecipeSearchPageViewModel extends ChangeNotifier {
        _searchRecipesByIngredientsUseCase = searchRecipesByIngredientsUseCase,
        _searchRecipesUseCase = searchRecipesUseCase {
     searchByIngredientsCommand = ComplexCommand(_searchByIngredients);
-    load = ComplexCommand(_searchRecipes)..execute(arg: RecipeQuery());
+    load = ComplexCommand(_searchRecipes)..execute(arg: RecipeQuery( number: 30, offset: 0));
     loadMore = ComplexCommand(_loadMore);
     searchRecipes = ComplexCommand(_searchRecipes);
     getAutocomplete = ComplexCommand(_getAutoComplete);
@@ -35,7 +35,7 @@ class RecipeSearchPageViewModel extends ChangeNotifier {
   late final ComplexCommand<void, String> getAutocomplete;
   late final BasicCommand simulateSearch;
 
-  late RecipeQuery _query;
+  late RecipeQuery _query = RecipeQuery();
 
   final Logger _logger = Logger();
 

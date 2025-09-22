@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chef_mate/features/recipe/data/query/search.recipe.query.dart';
 import 'package:chef_mate/features/recipe/ui/viewModels/recipe.search.page.viewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RecipeList extends StatefulWidget {
   final RecipeSearchPageViewModel _viewModel;

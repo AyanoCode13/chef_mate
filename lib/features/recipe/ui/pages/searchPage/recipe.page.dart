@@ -1,3 +1,4 @@
+import 'package:chef_mate/features/recipe/ui/pages/searchPage/animated.searchBar.dart';
 import 'package:chef_mate/features/recipe/ui/pages/searchPage/recipe.fab.dart';
 import 'package:chef_mate/features/recipe/ui/pages/searchPage/recipe.list.dart';
 import 'package:chef_mate/features/recipe/ui/pages/searchPage/recipe.searchBar.dart';
@@ -21,6 +22,7 @@ class RecipesSearchPage extends StatelessWidget {
       loadingWidget: Center(child: CircularProgressIndicator()),
       errorWidget: Text("Error"),
       successWidget: Scaffold(
+       
         body: SafeArea(
           child: Column(
             children: [
