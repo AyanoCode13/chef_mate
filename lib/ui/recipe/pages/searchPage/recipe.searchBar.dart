@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:ui';
 
+import 'package:chef_mate/config/navigation/routes.dart';
 import 'package:chef_mate/data/query/search.recipe.query.dart';
 import 'package:chef_mate/ui/recipe/viewModels/recipe.search.page.viewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RecipesSearchBar extends StatefulWidget {
   final RecipeSearchPageViewModel _viewModel;
@@ -57,6 +60,12 @@ class _RecipesSearchBarState extends State<RecipesSearchBar> {
         );
         _controller.clear();
       },
+      trailing: [
+        IconButton(onPressed: (){
+          context.push(Routes.filters);
+        }, icon: Icon(Icons.filter_alt))
+      ],
+      constraints: BoxConstraints(maxHeight: 100),
       controller: _controller,
       leading: Icon(Icons.search),
       hintText: "Search...",

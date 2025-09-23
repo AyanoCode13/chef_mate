@@ -1,6 +1,6 @@
 import 'package:chef_mate/data/query/search.recipe.query.dart';
 import 'package:chef_mate/ui/recipe/viewModels/recipe.search.page.viewModel.dart';
-import 'package:chef_mate/utils/status.display.dart';
+import 'package:chef_mate/ui/status.display.dart';
 import 'package:flutter/material.dart';
 
 class LoadMoreButton extends StatefulWidget {

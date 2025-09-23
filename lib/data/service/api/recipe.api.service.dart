@@ -11,10 +11,8 @@ final class RecipeApiService extends ApiService {
       );
   Future<List<RecipeSummaryApiModel>> searchRecipes({required RecipeQuery query}) async {
     final res = await super.sendRequest(path: dotenv.env["RECIPE_COMPLEX_SEARCH_PATH"]!,query: query.toQueryParameters());
-    if(((res["results"] as List).isNotEmpty)){
-      return (res["results"] as List).map((el)=> RecipeSummaryApiModel.fromJson(el)).toList();
-    }
-    return[];
+    return (res["results"] as List).map((el)=> RecipeSummaryApiModel.fromJson(el)).toList();
+    
   }
 
   Future<String> getAutocomplete({required String query}) async {

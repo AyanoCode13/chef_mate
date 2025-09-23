@@ -1,8 +1,7 @@
-import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.fab.dart';
 import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.list.dart';
 import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.searchBar.dart';
 import 'package:chef_mate/ui/recipe/viewModels/recipe.search.page.viewModel.dart';
-import 'package:chef_mate/utils/status.display.dart';
+import 'package:chef_mate/ui/status.display.dart';
 import 'package:flutter/material.dart';
 
 class RecipesSearchPage extends StatelessWidget {
@@ -26,7 +25,7 @@ class RecipesSearchPage extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(10),
                 child: RecipesSearchBar(viewModel: _viewModel),
               ),
               ListenableBuilder(
@@ -44,8 +43,7 @@ class RecipesSearchPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        floatingActionButton: RecipesFab(),
+        )
       ),
     );
   }
