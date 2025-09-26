@@ -4,10 +4,11 @@ import 'package:chef_mate/data/service/api/recipe.api.service.dart';
 import 'package:chef_mate/domain/entity/recipe/recipeSummary/recipe.summary.dart';
 import 'package:chef_mate/utils/result.dart';
 
-final class RecipeApiRepository implements RecipeRepository{
+final class RecipeApiRepository implements RecipeRepository {
   final RecipeApiService _apiService;
 
-  RecipeApiRepository({required RecipeApiService apiService}) : _apiService = apiService;
+  RecipeApiRepository({required RecipeApiService apiService})
+    : _apiService = apiService;
   @override
   Future<Result<List<RecipeSummary>>> searchRecipes({
     required RecipeQuery query,
@@ -31,11 +32,16 @@ final class RecipeApiRepository implements RecipeRepository{
       return Result.error(e);
     }
   }
-  
+
   @override
-  Future<Result<List<String>>> getAutocomplete({required String query}) {
+  Future<Result<List<String>>> getAutocomplete({required String query}) async {
     // TODO: implement getAutocomplete
-    throw UnimplementedError();
+    try {
+      final res = await _apiService.getSuggestions(query: query);
+      print(res);
+      return Result.ok(res);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
   }
-  
 }

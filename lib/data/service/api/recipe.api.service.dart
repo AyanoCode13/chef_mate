@@ -25,4 +25,18 @@ final class RecipeApiService extends ApiService {
     }
     return [];
   }
+
+  Future<List<String>> getSuggestions({ required String query}) async {
+    final res = await sendRequest(path:dotenv.env["RECIPE_AUTOCOMPLETE_PATH"]!,
+      query: {
+        "query": query,
+      }
+    );
+    if (res != null) {
+      return (res as List)
+          .map((el) => el["title"] as String)
+          .toList();
+    }
+    return[];
+  }
 }

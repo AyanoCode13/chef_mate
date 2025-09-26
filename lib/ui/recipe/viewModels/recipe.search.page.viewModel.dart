@@ -20,11 +20,11 @@ class RecipeSearchPageViewModel extends ChangeNotifier {
   }) : _getRecipesAutocompleteUseCase = getRecipesAutocompleteUseCase,
        _searchRecipesByIngredientsUseCase = searchRecipesByIngredientsUseCase,
        _searchRecipesUseCase = searchRecipesUseCase {
-    
-    load = ComplexCommand(_searchRecipes)..execute(arg: RecipeQuery(offset: 0, number: 30));
+    load = ComplexCommand(_searchRecipes)
+      ..execute(arg: RecipeQuery(offset: 0, number: 30));
     loadMore = ComplexCommand(_loadMore);
     searchRecipes = ComplexCommand(_searchRecipes);
-    simulateSearch = BasicCommand(_simutaleSearch);
+    getAutocomplete = ComplexCommand(_getAutocomplete);
   }
 
   late final ComplexCommand<void, List<String>> searchByIngredientsCommand;
@@ -45,8 +45,9 @@ class RecipeSearchPageViewModel extends ChangeNotifier {
   List<String> get suggestions => _suggestions;
 
   Future<Result<void>> _searchRecipes(RecipeQuery query) async {
+    _query.merge(query);
     try {
-      final res = await _searchRecipesUseCase.call(query: query);
+      final res = await _searchRecipesUseCase.call(query: _query);
       switch (res) {
         case Ok<List<RecipeSummary>>():
           {
@@ -65,16 +66,29 @@ class RecipeSearchPageViewModel extends ChangeNotifier {
     }
   }
 
+  Future<Result<void>> _getAutocomplete(String query) async {
+    try {
+      final res = await _getRecipesAutocompleteUseCase.call(arg: query);
+      switch (res) {
+        case Ok<List<String>>():
+          {
+            _logger.i(res.value);
+            _suggestions = res.value;
+
+            return Result.ok(null);
+          }
+        case Error<List<String>>():
+          {
+            return Result.error(res.error);
+          }
+      }
+    } finally {
+      notifyListeners();
+    }
+  }
 
   Future<Result<void>> _loadMore(int offset) async {
     _query = _query.merge(RecipeQuery(offset: offset));
-    _logger.i(_query.toQueryParameters());
     return await _searchRecipes(_query);
-  }
-
-  Future<Result<void>> _simutaleSearch() async {
-    await Future.delayed(Duration(seconds: 5));
-    print("Searching");
-    return Result.ok(null);
   }
 }

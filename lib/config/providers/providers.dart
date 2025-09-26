@@ -22,12 +22,14 @@ List<SingleChildWidget> get recipeProviders => [
     ),
   ),
   Provider(
-    lazy: false,
+    lazy: true,
     create: (context)=> SearchRecipesUseCase(
       recipeRepository: context.read<RecipeApiRepository>() as RecipeRepository
     )
   ),
-  Provider(create: (context) => GetRecipesAutocompleteUseCase(recipeRepository: context.read<RecipeApiRepository>() as RecipeRepository)),
+  Provider(
+    lazy: false,
+    create: (context) => GetRecipesAutocompleteUseCase(recipeRepository: context.read<RecipeApiRepository>() as RecipeRepository)),
  
   ChangeNotifierProvider(
     create: (context) => 

@@ -1,6 +1,7 @@
 import 'package:chef_mate/data/query/search.recipe.query.dart';
-import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.filters.dialog.dart';
-import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.list.dart';
+import 'package:chef_mate/data/service/api/recipe.api.service.dart';
+import 'package:chef_mate/ui/recipe/pages/searchPage/components/filters.dart';
+import 'package:chef_mate/ui/recipe/pages/searchPage/components/list.dart';
 import 'package:chef_mate/ui/recipe/viewModels/recipe.search.page.viewModel.dart';
 import 'package:chef_mate/ui/status.display.dart';
 import 'package:flutter/material.dart';
@@ -53,8 +54,6 @@ class RecipesSearchPage extends StatelessWidget {
                 builder: (context, _) {
                   return StatusDisplay(
                     command: _viewModel.searchRecipes,
-                    loadingWidget: Center(child: CircularProgressIndicator()),
-                    errorWidget: Text("Error"),
                     successWidget: Expanded(
                       child: RecipeList(viewModel: _viewModel),
                     ),
@@ -71,10 +70,10 @@ class RecipesSearchPage extends StatelessWidget {
 
 class AppBarSearchDelegate extends SearchDelegate {
   final RecipeSearchPageViewModel _viewModel;
-
+  
   AppBarSearchDelegate({required RecipeSearchPageViewModel viewModel})
-    : _viewModel = viewModel;
-
+    : _viewModel = viewModel, super();
+    
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -86,6 +85,7 @@ class AppBarSearchDelegate extends SearchDelegate {
       ),
     ];
   }
+  
 
   @override
   Widget? buildLeading(BuildContext context) {
@@ -99,13 +99,27 @@ class AppBarSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    _viewModel.searchRecipes.execute(arg: RecipeQuery(titleMatch: query));
+   
     close(context, null);
     return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    _viewModel.getAutocomplete.execute(arg: query);
+    return ListView.builder(
+      itemCount: _viewModel.suggestions.length,
+      itemBuilder: (context, index) {
+        final suggestion = _viewModel.suggestions[index];
+        return ListTile(
+          title: Text(suggestion),
+          onTap: () {
+            query = suggestion;
+            _viewModel.searchRecipes.execute(arg: RecipeQuery(query: query, offset: 0, number: 30));
+            close(context, null);
+          },
+        );
+      },
+    );
   }
 }

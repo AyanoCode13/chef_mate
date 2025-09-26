@@ -11,13 +11,13 @@ class StatusDisplay extends StatelessWidget {
     super.key, 
     required Command command, 
     required Widget successWidget, 
-    required Widget loadingWidget, 
-    required Widget errorWidget
+    Widget? loadingWidget, 
+    Widget? errorWidget
   }) : 
   _command = command, 
   _successWidget = successWidget, 
-  _loadingWidget = loadingWidget, 
-  _errorWidget = errorWidget;
+  _loadingWidget = loadingWidget ?? const Center(child: CircularProgressIndicator()), 
+  _errorWidget = errorWidget ?? const Text("An error occurred");
   
   
   @override

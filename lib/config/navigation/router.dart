@@ -1,5 +1,5 @@
 import 'package:chef_mate/config/navigation/routes.dart';
-import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.page.dart';
+import 'package:chef_mate/ui/recipe/pages/searchPage/page.dart';
 import 'package:chef_mate/ui/recipe/viewModels/recipe.search.page.viewModel.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
