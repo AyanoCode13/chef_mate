@@ -30,8 +30,8 @@ class RecipeQuery {
   // Sorting and pagination
   final String? sort;
   final String? sortDirection;
-  late int? offset;
-  late int? number;
+  final int? offset;
+  final int? number;
 
   
   // Constructor with named parameters
@@ -67,8 +67,8 @@ class RecipeQuery {
     // Sorting and pagination
     this.sort,
     this.sortDirection,
-    this.offset,
-    this.number,
+    this.offset = 0,
+    this.number = 30,
   });
   
 
@@ -154,7 +154,6 @@ class RecipeQuery {
       sortDirection: other.sortDirection ?? sortDirection,
       offset: other.offset ?? offset,
       number: other.number ?? number,
-      
       
     );
   }

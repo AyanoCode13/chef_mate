@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:chef_mate/config/navigation/routes.dart';
 import 'package:chef_mate/data/query/search.recipe.query.dart';
+import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.filters.dialog.dart';
 import 'package:chef_mate/ui/recipe/viewModels/recipe.search.page.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -62,7 +63,9 @@ class _RecipesSearchBarState extends State<RecipesSearchBar> {
       },
       trailing: [
         IconButton(onPressed: (){
-          context.push(Routes.filters);
+          showDialog(context: context, builder: (context){
+            return RecipeFiltersDialogue(viewModel: widget._viewModel);
+          });
         }, icon: Icon(Icons.filter_alt))
       ],
       constraints: BoxConstraints(maxHeight: 100),

@@ -13,7 +13,11 @@ abstract class ApiService {
     _headers = {'X-API-KEY': _apiKey, 'Content-Type': 'application/json'};
   }
 
-  Future sendRequest({
+  void setHeaders ({ required Map<String, String>? headers}){
+    _headers = headers;
+  }
+
+  Future<dynamic> sendRequest({
     required String path,
     Map<String, dynamic>? query,
   }) async {
@@ -25,7 +29,7 @@ abstract class ApiService {
       if (res.statusCode == 200) {
         return await _decodeJSON(data: res.body);
       }
-      return;
+      return null;
     } on Exception catch (e) {
       print(e);
     }

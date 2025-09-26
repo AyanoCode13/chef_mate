@@ -1,5 +1,6 @@
+import 'package:chef_mate/data/query/search.recipe.query.dart';
+import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.filters.dialog.dart';
 import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.list.dart';
-import 'package:chef_mate/ui/recipe/pages/searchPage/recipe.searchBar.dart';
 import 'package:chef_mate/ui/recipe/viewModels/recipe.search.page.viewModel.dart';
 import 'package:chef_mate/ui/status.display.dart';
 import 'package:flutter/material.dart';
@@ -20,14 +21,33 @@ class RecipesSearchPage extends StatelessWidget {
       loadingWidget: Center(child: CircularProgressIndicator()),
       errorWidget: Text("Error"),
       successWidget: Scaffold(
-       
+        appBar: AppBar(
+          title: Text("Home"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) =>
+                      RecipeFiltersDialogue(viewModel: _viewModel),
+                );
+              },
+              icon: Icon(Icons.filter_list),
+            ),
+            IconButton(
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: AppBarSearchDelegate(viewModel: _viewModel),
+                );
+              },
+              icon: Icon(Icons.search),
+            ),
+          ],
+        ),
         body: SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: RecipesSearchBar(viewModel: _viewModel),
-              ),
               ListenableBuilder(
                 listenable: _viewModel,
                 builder: (context, _) {
@@ -43,8 +63,49 @@ class RecipesSearchPage extends StatelessWidget {
               ),
             ],
           ),
-        )
+        ),
       ),
     );
+  }
+}
+
+class AppBarSearchDelegate extends SearchDelegate {
+  final RecipeSearchPageViewModel _viewModel;
+
+  AppBarSearchDelegate({required RecipeSearchPageViewModel viewModel})
+    : _viewModel = viewModel;
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    _viewModel.searchRecipes.execute(arg: RecipeQuery(titleMatch: query));
+    close(context, null);
+    return Container();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Container();
   }
 }

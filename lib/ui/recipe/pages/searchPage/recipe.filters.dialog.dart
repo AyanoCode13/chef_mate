@@ -3,15 +3,15 @@ import 'package:chef_mate/ui/recipe/viewModels/recipe.search.page.viewModel.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class RecipeFiltersPage extends StatefulWidget {
+class RecipeFiltersDialogue extends StatefulWidget {
   final RecipeSearchPageViewModel _viewModel;
 
-  const RecipeFiltersPage({super.key, required RecipeSearchPageViewModel viewModel}) : _viewModel = viewModel;
+  const RecipeFiltersDialogue({super.key, required RecipeSearchPageViewModel viewModel}) : _viewModel = viewModel;
   @override
-  State<RecipeFiltersPage> createState() => _FiltersPageState();
+  State<RecipeFiltersDialogue> createState() => _FiltersPageState();
 }
 
-class _FiltersPageState extends State<RecipeFiltersPage> {
+class _FiltersPageState extends State<RecipeFiltersDialogue> {
   late String _selectedCuisine="";
   late String _selectedDiet="";
   bool _withInstriuctuions = false;
@@ -76,11 +76,8 @@ class _FiltersPageState extends State<RecipeFiltersPage> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Filters", textAlign: TextAlign.center,),
-      ),
-      body: SafeArea(
+    return Dialog.fullscreen(
+      child: SafeArea(
         child: Column(
             children: [
               Expanded(

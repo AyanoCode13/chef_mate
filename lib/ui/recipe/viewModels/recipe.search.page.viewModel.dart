@@ -21,7 +21,7 @@ class RecipeSearchPageViewModel extends ChangeNotifier {
        _searchRecipesByIngredientsUseCase = searchRecipesByIngredientsUseCase,
        _searchRecipesUseCase = searchRecipesUseCase {
     
-    load = ComplexCommand(_searchRecipes)..execute(arg: RecipeQuery( number: 30, offset: 0));
+    load = ComplexCommand(_searchRecipes)..execute(arg: RecipeQuery(offset: 0, number: 30));
     loadMore = ComplexCommand(_loadMore);
     searchRecipes = ComplexCommand(_searchRecipes);
     simulateSearch = BasicCommand(_simutaleSearch);
@@ -34,7 +34,7 @@ class RecipeSearchPageViewModel extends ChangeNotifier {
   late final ComplexCommand<void, String> getAutocomplete;
   late final BasicCommand simulateSearch;
 
-  late RecipeQuery _query = RecipeQuery();
+  late RecipeQuery _query = RecipeQuery(offset: 0, number: 30);
 
   final Logger _logger = Logger();
 
@@ -45,15 +45,13 @@ class RecipeSearchPageViewModel extends ChangeNotifier {
   List<String> get suggestions => _suggestions;
 
   Future<Result<void>> _searchRecipes(RecipeQuery query) async {
-    _query = query;
-    _logger.i(_query.toQueryParameters());
-
     try {
-      final res = await _searchRecipesUseCase.call(query: _query);
+      final res = await _searchRecipesUseCase.call(query: query);
       switch (res) {
         case Ok<List<RecipeSummary>>():
           {
-            _recipes.addAll(res.value);
+            _logger.i(res.value);
+            _recipes = res.value;
 
             return Result.ok(null);
           }
