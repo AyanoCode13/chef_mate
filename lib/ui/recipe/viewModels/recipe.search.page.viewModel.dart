@@ -45,7 +45,7 @@ class RecipeSearchPageViewModel extends ChangeNotifier {
   List<String> get suggestions => _suggestions;
 
   Future<Result<void>> _searchRecipes(RecipeQuery query) async {
-    _query.merge(query);
+  
     try {
       final res = await _searchRecipesUseCase.call(query: _query);
       switch (res) {

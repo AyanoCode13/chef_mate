@@ -13,16 +13,16 @@ final class RecipeApiService extends ApiService {
   Future<List<RecipeSummaryApiModel>> searchRecipes({
     required RecipeQuery query,
   }) async {
-    final res = await sendRequest(
-      path: dotenv.env["RECIPE_COMPLEX_SEARCH_PATH"]!,
-      query: query.toQueryParameters()
-    );
-    print(res);
-    if (res != null) {
-      return (res["results"] as List)
-          .map((el) => RecipeSummaryApiModel.fromJson(el))
-          .toList();
-    }
+    // final res = await sendRequest(
+    //   path: dotenv.env["RECIPE_COMPLEX_SEARCH_PATH"]!,
+    //   query: query.toQueryParameters()
+    // );
+    // print(res);
+    // if (res != null) {
+    //   return (res["results"] as List)
+    //       .map((el) => RecipeSummaryApiModel.fromJson(el))
+    //       .toList();
+    // }
     return [];
   }
 

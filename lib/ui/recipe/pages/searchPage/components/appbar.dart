@@ -25,7 +25,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
             showDialog(
               context: context,
               builder: (context) =>
-                  RecipeFiltersDialogue(viewModel: _viewModel),
+                  RecipeFiltersDialogue(),
             );
           },
           icon: Icon(Icons.filter_list),
@@ -34,7 +34,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             showSearch(
               context: context,
-              delegate: _AppBarSearchDelegate(viewModel: _viewModel),
+              delegate: _AppBarSearchDelegate(),
             );
           },
           icon: Icon(Icons.search),
@@ -45,12 +45,7 @@ class HomePageAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class _AppBarSearchDelegate extends SearchDelegate {
-  final RecipeSearchPageViewModel _viewModel;
-
-  _AppBarSearchDelegate({required RecipeSearchPageViewModel viewModel})
-    : _viewModel = viewModel,
-      super();
-
+ 
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -81,7 +76,7 @@ class _AppBarSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    _viewModel.getAutocomplete.execute(arg: query);
+    context.read<RecipeSearchPageViewModel>().getAutocomplete.execute(arg: query);
     return ListView.builder(
       itemCount: context.watch<RecipeSearchPageViewModel>().suggestions.length,
       itemBuilder: (context, index) {
@@ -91,7 +86,7 @@ class _AppBarSearchDelegate extends SearchDelegate {
           title: Text(suggestion),
           onTap: () {
             query = suggestion;
-            _viewModel.searchRecipes.execute(
+            context.read<RecipeSearchPageViewModel>().searchRecipes.execute(
               arg: RecipeQuery(query: query, offset: 0, number: 30),
             );
             close(context, null);
