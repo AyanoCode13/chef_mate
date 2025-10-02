@@ -1,36 +1,35 @@
-import 'package:chaf_mate_2/ui/status.display.dart';
+import 'package:chaf_mate_2/ui/pages/home/components/searchBar.dart';
+import 'package:chaf_mate_2/ui/pages/home/components/sections/cuisine.section.dart';
 import 'package:chaf_mate_2/ui/viewModels/home.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Material(
-      child: StatusDisplay(
-        command: context.read<RecipeViewModel>().load, 
-        successWidget: ListenableBuilder(
-          listenable: context.read<RecipeViewModel>(), 
-          builder: (context, _){
-            return SafeArea(
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Text("Home"),
+      child: ListenableBuilder(
+        listenable: context.read<RecipeViewModel>(),
+        builder: (context, _) {
+          return SafeArea(
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: HomeSearchBar(),
                   ),
-                  SliverList.builder(
-                    itemCount: context.watch<RecipeViewModel>().recipes.length,
-                    itemBuilder: (context, index){
-                      final recipe = context.watch<RecipeViewModel>().recipes.elementAt(index);
-                      return Text(recipe.title);
-                    }
-                  )
-                ],
-              ),
-            );
-          }
-        )
+                ),
+                SliverToBoxAdapter(
+                  child: CuisineSection(),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
