@@ -24,26 +24,28 @@ class _IndexPageState extends State<IndexPage> {
     ),
     NavigationDestination(icon: Icon(Icons.settings), label: "Settings"),
   ];
-  final List<Widget> _pages = [HomePage(), Text("Storegae"),Text("Fav"),Text("Planner"),Text("Settings")];
+  final List<Widget> _pages = [
+    HomePage(),
+    Text("Storegae"),
+    Text("Fav"),
+    Text("Planner"),
+    Text("Settings"),
+  ];
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return StatusDisplay(
-      command: context.read<RecipeViewModel>().load,
-      loadingWidget: SplashScreen(),
-      successWidget: Scaffold(
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: _currentIndex,
-          destinations: _destinations,
-          onDestinationSelected: (value) {
-            setState(() {
-              _currentIndex = value;
-            });
-          },
-        ),
-        body: _pages.elementAt(_currentIndex),
+    return Scaffold(
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentIndex,
+        destinations: _destinations,
+        onDestinationSelected: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+        },
       ),
+      body: _pages.elementAt(_currentIndex),
     );
   }
 }

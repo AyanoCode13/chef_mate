@@ -1,8 +1,9 @@
-import 'package:chaf_mate_2/ui/pages/home/components/searchBar.dart';
-import 'package:chaf_mate_2/ui/pages/home/components/sections/cuisine.section.dart';
-import 'package:chaf_mate_2/ui/viewModels/home.viewModel.dart';
+import 'package:chaf_mate_2/ui/pages/home/components/sections/american.dart';
+import 'package:chaf_mate_2/ui/pages/home/components/sections/asian.dart';
+import 'package:chaf_mate_2/ui/pages/home/components/sections/drinks.dart';
+import 'package:chaf_mate_2/ui/pages/home/components/sections/popular.dart';
+import 'package:chaf_mate_2/ui/pages/home/components/sections/vv.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,25 +12,22 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Material(
-      child: ListenableBuilder(
-        listenable: context.read<RecipeViewModel>(),
-        builder: (context, _) {
-          return SafeArea(
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: HomeSearchBar(),
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: CuisineSection(),
-                )
-              ],
-            ),
-          );
-        },
+      child: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            // SliverToBoxAdapter(
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(8.0),
+            //     child: HomeSearchBar(),
+            //   ),
+            // ),
+            SliverToBoxAdapter(child: AmericanSection()),
+            SliverToBoxAdapter(child: AsianSection()),
+            SliverToBoxAdapter(child: MealSection()),
+            SliverToBoxAdapter(child: VeganAndVegetarianSection()),
+            SliverToBoxAdapter(child: PopularSection()),
+          ],
+        ),
       ),
     );
   }

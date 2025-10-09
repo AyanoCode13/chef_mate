@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RecipeApiModel {
 
- int get id; String get title; String get image;
+ int get id; String get title; String get image; int get readyInMinutes; bool get vegan; bool get vegetarian; bool get glutenFree; bool get dairyFree; int get servings; String get sourceUrl;
 /// Create a copy of RecipeApiModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $RecipeApiModelCopyWith<RecipeApiModel> get copyWith => _$RecipeApiModelCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecipeApiModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.image, image) || other.image == image));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecipeApiModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.image, image) || other.image == image)&&(identical(other.readyInMinutes, readyInMinutes) || other.readyInMinutes == readyInMinutes)&&(identical(other.vegan, vegan) || other.vegan == vegan)&&(identical(other.vegetarian, vegetarian) || other.vegetarian == vegetarian)&&(identical(other.glutenFree, glutenFree) || other.glutenFree == glutenFree)&&(identical(other.dairyFree, dairyFree) || other.dairyFree == dairyFree)&&(identical(other.servings, servings) || other.servings == servings)&&(identical(other.sourceUrl, sourceUrl) || other.sourceUrl == sourceUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,image);
+int get hashCode => Object.hash(runtimeType,id,title,image,readyInMinutes,vegan,vegetarian,glutenFree,dairyFree,servings,sourceUrl);
 
 @override
 String toString() {
-  return 'RecipeApiModel(id: $id, title: $title, image: $image)';
+  return 'RecipeApiModel(id: $id, title: $title, image: $image, readyInMinutes: $readyInMinutes, vegan: $vegan, vegetarian: $vegetarian, glutenFree: $glutenFree, dairyFree: $dairyFree, servings: $servings, sourceUrl: $sourceUrl)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $RecipeApiModelCopyWith<$Res>  {
   factory $RecipeApiModelCopyWith(RecipeApiModel value, $Res Function(RecipeApiModel) _then) = _$RecipeApiModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String title, String image
+ int id, String title, String image, int readyInMinutes, bool vegan, bool vegetarian, bool glutenFree, bool dairyFree, int servings, String sourceUrl
 });
 
 
@@ -65,11 +65,18 @@ class _$RecipeApiModelCopyWithImpl<$Res>
 
 /// Create a copy of RecipeApiModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? image = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? image = null,Object? readyInMinutes = null,Object? vegan = null,Object? vegetarian = null,Object? glutenFree = null,Object? dairyFree = null,Object? servings = null,Object? sourceUrl = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String,readyInMinutes: null == readyInMinutes ? _self.readyInMinutes : readyInMinutes // ignore: cast_nullable_to_non_nullable
+as int,vegan: null == vegan ? _self.vegan : vegan // ignore: cast_nullable_to_non_nullable
+as bool,vegetarian: null == vegetarian ? _self.vegetarian : vegetarian // ignore: cast_nullable_to_non_nullable
+as bool,glutenFree: null == glutenFree ? _self.glutenFree : glutenFree // ignore: cast_nullable_to_non_nullable
+as bool,dairyFree: null == dairyFree ? _self.dairyFree : dairyFree // ignore: cast_nullable_to_non_nullable
+as bool,servings: null == servings ? _self.servings : servings // ignore: cast_nullable_to_non_nullable
+as int,sourceUrl: null == sourceUrl ? _self.sourceUrl : sourceUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -155,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String title,  String image)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String title,  String image,  int readyInMinutes,  bool vegan,  bool vegetarian,  bool glutenFree,  bool dairyFree,  int servings,  String sourceUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RecipeApiModel() when $default != null:
-return $default(_that.id,_that.title,_that.image);case _:
+return $default(_that.id,_that.title,_that.image,_that.readyInMinutes,_that.vegan,_that.vegetarian,_that.glutenFree,_that.dairyFree,_that.servings,_that.sourceUrl);case _:
   return orElse();
 
 }
@@ -176,10 +183,10 @@ return $default(_that.id,_that.title,_that.image);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String title,  String image)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String title,  String image,  int readyInMinutes,  bool vegan,  bool vegetarian,  bool glutenFree,  bool dairyFree,  int servings,  String sourceUrl)  $default,) {final _that = this;
 switch (_that) {
 case _RecipeApiModel():
-return $default(_that.id,_that.title,_that.image);case _:
+return $default(_that.id,_that.title,_that.image,_that.readyInMinutes,_that.vegan,_that.vegetarian,_that.glutenFree,_that.dairyFree,_that.servings,_that.sourceUrl);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +203,10 @@ return $default(_that.id,_that.title,_that.image);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String title,  String image)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String title,  String image,  int readyInMinutes,  bool vegan,  bool vegetarian,  bool glutenFree,  bool dairyFree,  int servings,  String sourceUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _RecipeApiModel() when $default != null:
-return $default(_that.id,_that.title,_that.image);case _:
+return $default(_that.id,_that.title,_that.image,_that.readyInMinutes,_that.vegan,_that.vegetarian,_that.glutenFree,_that.dairyFree,_that.servings,_that.sourceUrl);case _:
   return null;
 
 }
@@ -211,12 +218,19 @@ return $default(_that.id,_that.title,_that.image);case _:
 @JsonSerializable()
 
 class _RecipeApiModel implements RecipeApiModel {
-  const _RecipeApiModel({required this.id, required this.title, required this.image});
+  const _RecipeApiModel({required this.id, required this.title, required this.image, required this.readyInMinutes, required this.vegan, required this.vegetarian, required this.glutenFree, required this.dairyFree, required this.servings, required this.sourceUrl});
   factory _RecipeApiModel.fromJson(Map<String, dynamic> json) => _$RecipeApiModelFromJson(json);
 
 @override final  int id;
 @override final  String title;
 @override final  String image;
+@override final  int readyInMinutes;
+@override final  bool vegan;
+@override final  bool vegetarian;
+@override final  bool glutenFree;
+@override final  bool dairyFree;
+@override final  int servings;
+@override final  String sourceUrl;
 
 /// Create a copy of RecipeApiModel
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecipeApiModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.image, image) || other.image == image));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RecipeApiModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.image, image) || other.image == image)&&(identical(other.readyInMinutes, readyInMinutes) || other.readyInMinutes == readyInMinutes)&&(identical(other.vegan, vegan) || other.vegan == vegan)&&(identical(other.vegetarian, vegetarian) || other.vegetarian == vegetarian)&&(identical(other.glutenFree, glutenFree) || other.glutenFree == glutenFree)&&(identical(other.dairyFree, dairyFree) || other.dairyFree == dairyFree)&&(identical(other.servings, servings) || other.servings == servings)&&(identical(other.sourceUrl, sourceUrl) || other.sourceUrl == sourceUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,image);
+int get hashCode => Object.hash(runtimeType,id,title,image,readyInMinutes,vegan,vegetarian,glutenFree,dairyFree,servings,sourceUrl);
 
 @override
 String toString() {
-  return 'RecipeApiModel(id: $id, title: $title, image: $image)';
+  return 'RecipeApiModel(id: $id, title: $title, image: $image, readyInMinutes: $readyInMinutes, vegan: $vegan, vegetarian: $vegetarian, glutenFree: $glutenFree, dairyFree: $dairyFree, servings: $servings, sourceUrl: $sourceUrl)';
 }
 
 
@@ -251,7 +265,7 @@ abstract mixin class _$RecipeApiModelCopyWith<$Res> implements $RecipeApiModelCo
   factory _$RecipeApiModelCopyWith(_RecipeApiModel value, $Res Function(_RecipeApiModel) _then) = __$RecipeApiModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String title, String image
+ int id, String title, String image, int readyInMinutes, bool vegan, bool vegetarian, bool glutenFree, bool dairyFree, int servings, String sourceUrl
 });
 
 
@@ -268,11 +282,18 @@ class __$RecipeApiModelCopyWithImpl<$Res>
 
 /// Create a copy of RecipeApiModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? image = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? image = null,Object? readyInMinutes = null,Object? vegan = null,Object? vegetarian = null,Object? glutenFree = null,Object? dairyFree = null,Object? servings = null,Object? sourceUrl = null,}) {
   return _then(_RecipeApiModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,image: null == image ? _self.image : image // ignore: cast_nullable_to_non_nullable
+as String,readyInMinutes: null == readyInMinutes ? _self.readyInMinutes : readyInMinutes // ignore: cast_nullable_to_non_nullable
+as int,vegan: null == vegan ? _self.vegan : vegan // ignore: cast_nullable_to_non_nullable
+as bool,vegetarian: null == vegetarian ? _self.vegetarian : vegetarian // ignore: cast_nullable_to_non_nullable
+as bool,glutenFree: null == glutenFree ? _self.glutenFree : glutenFree // ignore: cast_nullable_to_non_nullable
+as bool,dairyFree: null == dairyFree ? _self.dairyFree : dairyFree // ignore: cast_nullable_to_non_nullable
+as bool,servings: null == servings ? _self.servings : servings // ignore: cast_nullable_to_non_nullable
+as int,sourceUrl: null == sourceUrl ? _self.sourceUrl : sourceUrl // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

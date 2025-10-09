@@ -23,17 +23,19 @@ class StatusDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return ListenableBuilder(
-      listenable: _command,
-      builder: (context, child){
-        if(_command.running){
-          return _loadingWidget;
-        }
-        if(_command.failed){
-          return _errorWidget;
-        }
-        return _successWidget;
-      },
+    return Material(
+      child: ListenableBuilder(
+        listenable: _command,
+        builder: (context, child){
+          if(_command.running){
+            return _loadingWidget;
+          }
+          if(_command.failed){
+            return _errorWidget;
+          }
+          return _successWidget;
+        },
+      ),
     );
   }
 

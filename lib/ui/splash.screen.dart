@@ -122,39 +122,3 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-// Example Home Screen (replace with your actual home screen)
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        backgroundColor: const Color(0xFF1E88E5),
-        foregroundColor: Colors.white,
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.home,
-              size: 100,
-              color: Color(0xFF1E88E5),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Welcome to Home Screen!',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF1E88E5),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

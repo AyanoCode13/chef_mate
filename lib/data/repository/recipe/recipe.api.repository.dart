@@ -19,6 +19,15 @@ class RecipeApiRepository {
     }
   }
 
+  Future<Result<List<RecipeApiModel>>> getVeganAndVegetarianRecipes() async {
+    try {
+      final res = await _recipeApiService.getVeganAndVegetarianRecipes();
+      return Result.ok(res);
+    } on Exception catch (e) {
+      return Result.error(e);
+    }
+  }
+
   Future<Result<List<String>>> getSuggestions({required String query}) async {
     try {
       final res = await _recipeApiService.getSuggestions(query: query);

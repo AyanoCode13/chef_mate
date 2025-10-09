@@ -15,16 +15,16 @@ final class RecipeApiService extends ApiService {
    Future<List<RecipeApiModel>> searchRecipes({
     required RecipeQuery query,
   }) async {
-    // final res = await sendGetRequest(
-    //   path: dotenv.env["RECIPE_COMPLEX_SEARCH_PATH"]!,
-    //   query: query.toQueryParameters()
-    // );
-    // print(res);
-    // if (res != null) {
-    //   return (res["results"] as List)
-    //       .map((el) => RecipeApiModel.fromJson(el))
-    //       .toList();
-    // }
+    final res = await sendGetRequest(
+      path: dotenv.env["RECIPE_COMPLEX_SEARCH_PATH"]!,
+      query: query.toQueryParameters()
+    );
+    print(res);
+    if (res != null) {
+      return (res["results"] as List)
+          .map((el) => RecipeApiModel.fromJson(el))
+          .toList();
+    }
     return [];
   }  
    Future<List<String>> getSuggestions({ required String query}) async {
@@ -43,6 +43,19 @@ final class RecipeApiService extends ApiService {
   /*
     Categories
   */
+  Future<List<RecipeApiModel>> getVeganAndVegetarianRecipes() async {
+     final res = await sendGetRequest(
+      path: dotenv.env["RECIPE_COMPLEX_SEARCH_PATH"]!,
+      query: RecipeQuery(diet: "vegan|vegetarian", addRecipeInformation: true, number: 10).toQueryParameters(),
+    );
+    
+    if (res != null) {
+      return (res["results"] as List)
+          .map((el) => RecipeApiModel.fromJson(el))
+          .toList();
+    }
+    return [];
+  }
 
   // Future<Map<String,dynamic>> getItalianRecipes() async {
   //   return await sendGetRequest(path: dotenv.env["RECIPE_COMPLEX_SEARCH_PATH"]!, query: {"cuisine": "italian"});
