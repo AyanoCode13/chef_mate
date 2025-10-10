@@ -1,4 +1,4 @@
-# chaf_mate_2
+# chaf_mate
 
 A new Flutter project.
 
