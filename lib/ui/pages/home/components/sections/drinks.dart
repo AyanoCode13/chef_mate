@@ -8,17 +8,19 @@ class MealSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
                 "Drinks",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-            ],
-          ),
+            ),
+            
+            TextButton(onPressed: (){}, child: Text("View All"))
+          ],
         ),
         Row(children: [Expanded(child: MealsList())]),
       ],

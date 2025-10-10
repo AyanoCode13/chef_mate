@@ -9,7 +9,7 @@ class RecipeApiRepository {
     : _recipeApiService = recipeApiService;
 
   Future<Result<List<RecipeApiModel>>> searchRecipes({
-    required RecipeQuery query
+    required RecipeQuery query,
   }) async {
     try {
       final res = await _recipeApiService.searchRecipes(query: query);
@@ -19,9 +19,9 @@ class RecipeApiRepository {
     }
   }
 
-  Future<Result<List<RecipeApiModel>>> getVeganAndVegetarianRecipes() async {
+  Future<Result<RecipeApiModel>> getById({required int id}) async {
     try {
-      final res = await _recipeApiService.getVeganAndVegetarianRecipes();
+      final res = await _recipeApiService.getById(id: id);
       return Result.ok(res);
     } on Exception catch (e) {
       return Result.error(e);

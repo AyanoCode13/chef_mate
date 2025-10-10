@@ -9,7 +9,6 @@ class VeganAndVegetarianSection extends StatelessWidget {
     // TODO: implement build
     return Column(
       mainAxisSize: MainAxisSize.max,
-
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

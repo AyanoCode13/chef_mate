@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 abstract class _SearchRecipes extends ChangeNotifier{
   final SearchRecipesUseCase _searchRecipesUseCase;
   _SearchRecipes({required SearchRecipesUseCase searchRecipesUseCase})
-    : _searchRecipesUseCase = searchRecipesUseCase {}
+    : _searchRecipesUseCase = searchRecipesUseCase;
 
   late List<RecipeApiModel> _results = [];
   List<RecipeApiModel> get results => _results;
