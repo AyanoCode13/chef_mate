@@ -1,10 +1,5 @@
 import 'package:chaf_mate_2/ui/pages/home/page.dart';
-import 'package:chaf_mate_2/ui/splash.screen.dart';
-import 'package:chaf_mate_2/ui/status.display.dart';
-import 'package:chaf_mate_2/ui/viewModels/home.viewModel.dart';
-import 'package:chaf_mate_2/utils/command.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class IndexPage extends StatefulWidget {
   const IndexPage({super.key});
