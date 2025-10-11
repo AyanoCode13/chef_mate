@@ -21,7 +21,7 @@ class _RecipeCardState extends State<RecipeCard> {
     return Card(
       child: CachedNetworkImage(
         errorWidget: (context, url, error) => Icon(Icons.error),
-        placeholder: (context, url) => CircularProgressIndicator(),
+        placeholder: (context, url) => SizedBox(width: 250, height: 250 ,child: Center(child: CircularProgressIndicator())),
         imageUrl: widget._recipe.image,
         imageBuilder: (context, imageProvider) => GestureDetector(
           onTap: () {

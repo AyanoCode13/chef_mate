@@ -1,6 +1,8 @@
 
 
+import 'package:chaf_mate_2/config/routing/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -36,9 +38,14 @@ class _SplashScreenState extends State<SplashScreen>
 
     // Start animations
     _animationController.forward();
-    
+    _navigateToHome();
   }
-
+   _navigateToHome() async {
+    await Future.delayed(const Duration(milliseconds: 5000));
+    if (mounted) {
+     context.pushReplacement(Routes.home);
+    }
+  }
   
   @override
   void dispose() {

@@ -13,7 +13,7 @@ Future<void> main() async{
     DeviceOrientation.portraitUp
   ]);
   runApp(
-    MultiProvider(providers: [...recipeProviders], child: const MyApp())
+    MultiProvider(providers: [...providers], child: const MyApp())
   );
 }
 
